@@ -32,7 +32,18 @@ const storage = multer.diskStorage({
     cb(null, `${uuid}.${ext}`);
   },
 });
-app.use(multer({ storage }).single("img_ktp"));
+const upload = multer({ storage });
+console.log(upload, "aplot");
+const uploadstr = upload.fields([
+  { name: "img_ktp" },
+  { name: "ijazah" },
+  { name: "transkrip" },
+  { name: "pas_foto" },
+  { name: "surat_pernyataan" },
+  { name: "bukti_bayar" },
+  { name: "ttd_asesi" },
+]);
+app.use(uploadstr);
 app.use(router);
 // app.use(errorHandler);
 

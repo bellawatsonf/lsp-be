@@ -1,13 +1,14 @@
-const { Asesi } = require("../models/asesi.js");
+const { Asesi } = require("../models/index.js");
 
 class Asesi_Controller {
   //   static getAsesi(req, res, next) {}
   static createAsesi(req, res, next) {
-    console.log(req, "nana");
+    console.log(req.files.img_ktp[0].destination, "nana");
 
     let input = {
       nama_lengkap: req.body.nama_lengkap,
-      img_ktp: req.file.destination + "/" + req.file.filename,
+      img_ktp:
+        req.files.img_ktp[0].destination + "/" + req.files.img_ktp[0].filename,
       // tempat_lahir: req.body.tempat_lahir,
       // tgl_lahir: req.body.tgl_lahir,
       // jenis_kelamin: req.body.jenis_kelamin,
@@ -24,15 +25,29 @@ class Asesi_Controller {
       // tlp_kantor: req.body.tlp_kantor,
       // fax: req.body.fax,
       // kodepos_kantor: req.body.kodepos_kantor,
-      // transkrip: req.file.transkrip,
-      // ijazah: req.file.ijazah,
-      // img_ktp: req.file.img_ktp,
-      // pas_foto: req.file.pas_foto,
-      // surat_pernyataan: req.file.surat_pernyataan,
-      // ttd_asesi: req.file.ttd_asesi,
-      // memiliki_nilai_D: req.body.memiliki_nilai_D,
+      transkrip:
+        req.files.transkrip[0].destination +
+        "/" +
+        req.files.transkrip[0].filename,
+      ijazah:
+        req.files.ijazah[0].destination + "/" + req.files.transkrip[0].filename,
+      img_ktp:
+        req.files.img_ktp[0].destination + "/" + req.files.img_ktp[0].filename,
+      pas_foto:
+        req.files.pas_foto[0].destination +
+        "/" +
+        req.files.pas_foto[0].filename,
+      surat_pernyataan:
+        req.files.surat_pernyataan[0].destination +
+        "/" +
+        req.files.surat_pernyataan[0].filename,
+      ttd_asesi:
+        req.files.ttd_asesi[0].destination +
+        "/" +
+        req.files.ttd_asesi[0].filename,
+      memiliki_nilai_D: req.body.memiliki_nilai_D,
     };
-    console.log(input, "input");
+    // console.log(input, "input");
     Asesi.create(input)
       .then((data) => {
         console.log(data, "data");

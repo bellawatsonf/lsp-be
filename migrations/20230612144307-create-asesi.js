@@ -64,28 +64,31 @@ module.exports = {
         type: Sequelize.STRING,
       },
       transkrip: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       ijazah: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       bukti_bayar: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       img_ktp: {
         type: Sequelize.STRING,
       },
       pas_foto: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       surat_pernyataan: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       ttd_asesi: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       memiliki_nilai_D: {
         type: Sequelize.BOOLEAN,
+      },
+      password: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
