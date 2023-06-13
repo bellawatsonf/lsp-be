@@ -73,7 +73,7 @@ module.exports = {
         type: Sequelize.BLOB,
       },
       img_ktp: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
       },
       pas_foto: {
         type: Sequelize.BLOB,
