@@ -10,4 +10,6 @@ router.post("/add-asesi", Asesi_Controller.createAsesi);
 //controller skema sertifikasi
 router.get("/skemasertifikasi", Skema_Controller.showSkema);
 router.post("/add-skemasertifikasi", Skema_Controller.createSkema);
+router.patch("/edit-skemasertifikasi", Skema_Controller.editSkema);
+router.delete("/delete-skemasertifikasi", Skema_Controller.deleteSkema);
 module.exports = router;
