@@ -90,6 +90,16 @@ module.exports = {
       password: {
         type: Sequelize.STRING,
       },
+      id_role: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "roles",
+          key: "id",
+        },
+      },
+      status_pembayaran: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

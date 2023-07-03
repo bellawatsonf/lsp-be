@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       username: DataTypes.STRING,
       password: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        validate: {
+          isEmail: {
+            msg: "format email tidak sesuai",
+          },
+        },
+      },
       id_role: DataTypes.INTEGER,
     },
 
