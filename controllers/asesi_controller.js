@@ -46,6 +46,8 @@ class Asesi_Controller {
         "/" +
         req.files.ttd_asesi[0].filename,
       memiliki_nilai_D: req.body.memiliki_nilai_D,
+      id_role: 3,
+      status_pembayaran: "pending",
     };
     // console.log(input, "input");
     Asesi.create(input)
@@ -57,6 +59,22 @@ class Asesi_Controller {
       })
       .catch((err) => {
         console.log(err, "error");
+      });
+  }
+
+  static updateStatusPembayaranAsesi(req, res, next) {
+    console.log(req.body.status_pembayaran);
+    let id = req.params.id;
+    let input = {
+      status_pembayaran: req.body.status_pembayaran,
+    };
+
+    Asesi.update(input, { where: { id }, returning: true })
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 }

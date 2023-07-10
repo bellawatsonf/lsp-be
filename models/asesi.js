@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Asesi.belongsTo(models.role, { as: "Roles", foreignKey: "id_role" });
     }
   }
   Asesi.init(
@@ -40,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
       ttd_asesi: DataTypes.STRING,
       password: DataTypes.STRING,
       memiliki_nilai_D: DataTypes.BOOLEAN,
+      id_role: DataTypes.INTEGER,
+      status_pembayaran: {
+        type: DataTypes.STRING,
+        defaultValue: "unpaid",
+      },
     },
     {
       sequelize,
