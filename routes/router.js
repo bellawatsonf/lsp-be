@@ -7,6 +7,7 @@ const Role_Controller = require("../controllers/role_controller.js");
 const User_Controller = require("../controllers/user_controller.js");
 const { authentication } = require("../middleware/auth.js");
 const Unit_Kompetensi_Controller = require("../controllers/unitkompetensi_controller.js");
+const Kriteria_UnitKerja = require("../controllers/kriteriaunjukkkerja_controller.js");
 
 //controller asesi
 // router.get("/asesi", Asesi_Controller.getAsesi());
@@ -27,6 +28,13 @@ router.get("/unitkompetensi", Unit_Kompetensi_Controller.show_Unit_Kompetensi);
 router.post(
   "/add-unitkompetensi",
   Unit_Kompetensi_Controller.create_Unit_Kompetensi
+);
+
+//controller kriteria unit kerja
+router.get("/kriteria-unitkerja", Kriteria_UnitKerja.show_Kriteria_UnitKerja);
+router.post(
+  "/add-kriteria-unitkerja",
+  Kriteria_UnitKerja.create_Kriteria_UnitKerja
 );
 
 //controller role sertifikasi

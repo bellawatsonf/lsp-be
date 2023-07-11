@@ -8,11 +8,14 @@ class Unit_Kompetensi_Controller {
       })
       .catch((err) => console.log(err));
   }
+
   static create_Unit_Kompetensi(req, res, next) {
     let input = {
-      no_Unit_Kompetensi: req.body.no_Unit_Kompetensi,
-      nama_Unit_Kompetensi: req.body.nama_Unit_Kompetensi,
+      kode_unit: req.body.kode_unit,
+      judul_unit: req.body.judul_unit,
+      id_skema: req.body.id_skema,
     };
+    console.log(input, "input");
     Unit_Kompetensi.create(input)
       .then((data) => {
         res.status(201).json({ data });

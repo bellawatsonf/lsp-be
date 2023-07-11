@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "skema",
         foreignKey: "id_skema",
       });
+      Skema.hasMany(models.Asesor, { as: "Skema", foreignKey: "id_skema" });
     }
   }
   Skema.init(

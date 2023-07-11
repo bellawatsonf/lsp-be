@@ -1,19 +1,20 @@
-const { Unit_Kompetensi } = require("../models/index.js");
+const { Kriteria_UnitKerja } = require("../models/index.js");
 
-class Unit_Kompetensi_Controller {
-  static show_Unit_Kompetensi(req, res, next) {
-    Unit_Kompetensi.findAll()
+class Kriteria_UnitKerja_Controller {
+  static show_Kriteria_UnitKerja(req, res, next) {
+    Kriteria_UnitKerja.findAll()
       .then((data) => {
         res.status(200).json({ data });
       })
       .catch((err) => console.log(err));
   }
-  static create_Unit_Kompetensi(req, res, next) {
+  static create_Kriteria_UnitKerja(req, res, next) {
     let input = {
-      no_Unit_Kompetensi: req.body.no_Unit_Kompetensi,
-      nama_Unit_Kompetensi: req.body.nama_Unit_Kompetensi,
+      elemen: req.body.elemen,
+      id_unit_kompetensi: req.body.id_unit_kompetensi,
+      kriteriakerja: req.body.kriteriakerja,
     };
-    Unit_Kompetensi.create(input)
+    Kriteria_UnitKerja.create(input)
       .then((data) => {
         res.status(201).json({ data });
       })
@@ -23,4 +24,4 @@ class Unit_Kompetensi_Controller {
   }
 }
 
-module.exports = Unit_Kompetensi_Controller;
+module.exports = Kriteria_UnitKerja_Controller;
