@@ -11,6 +11,10 @@ const Kriteria_UnitKerja = require("../controllers/kriteriaunjukkkerja_controlle
 const Asesor_Controller = require("../controllers/asesor_controller.js");
 const Admin_Controller = require("../controllers/admin_controller.js");
 const APL01_Controller = require("../controllers/APL01_controller.js");
+const User_Login_Controller = require("../controllers/user_login_controller.js");
+
+//controller login
+router.post("/login", User_Login_Controller.loginAdmin);
 
 //controller asesi
 router.get("/asesi", Asesi_Controller.getAsesi);
