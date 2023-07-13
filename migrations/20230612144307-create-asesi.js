@@ -9,9 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      id_asesi: {
-        type: Sequelize.INTEGER,
-      },
       nama_lengkap: {
         type: Sequelize.STRING,
       },
@@ -33,6 +30,7 @@ module.exports = {
       phone_number: {
         type: Sequelize.STRING,
       },
+
       email: {
         type: Sequelize.STRING,
       },
@@ -54,7 +52,13 @@ module.exports = {
       nama_instansi: {
         type: Sequelize.STRING,
       },
+      jabatan: {
+        type: Sequelize.STRING,
+      },
       tlp_kantor: {
+        type: Sequelize.STRING,
+      },
+      hp_kantor: {
         type: Sequelize.STRING,
       },
       fax: {
@@ -87,17 +91,20 @@ module.exports = {
       memiliki_nilai_D: {
         type: Sequelize.BOOLEAN,
       },
-      password: {
+      sertifikat_pelatihan_pendukung: {
         type: Sequelize.STRING,
       },
-      id_role: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "roles",
-          key: "id",
-        },
+      tujuan_asesmen: {
+        type: Sequelize.STRING,
       },
+
       status_pembayaran: {
+        type: Sequelize.STRING,
+      },
+      role: {
+        type: Sequelize.STRING,
+      },
+      alasan_penolakan: {
         type: Sequelize.STRING,
       },
       createdAt: {

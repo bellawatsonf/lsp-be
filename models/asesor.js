@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       no_reg: DataTypes.STRING,
       id_skema: DataTypes.INTEGER,
       role: DataTypes.STRING,
+      ttd_asesor: DataTypes.STRING,
     },
     {
       hooks: {

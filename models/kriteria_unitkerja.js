@@ -10,8 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Kriteria_UnitKerja.belongsTo(models.Unit_Kompetensi, {
-        as: "unit_kompetensi",
+        as: "Unit_Kompetensi",
         foreignKey: "id_unit_kompetensi",
+      });
+      Kriteria_UnitKerja.hasMany(models.APL01, {
+        as: "Kriteria_UnitKerja",
+        foreignKey: "id_kriteria_unitkerja",
       });
     }
   }

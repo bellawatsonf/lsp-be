@@ -8,9 +8,12 @@ const User_Controller = require("../controllers/user_controller.js");
 const { authentication } = require("../middleware/auth.js");
 const Unit_Kompetensi_Controller = require("../controllers/unitkompetensi_controller.js");
 const Kriteria_UnitKerja = require("../controllers/kriteriaunjukkkerja_controller.js");
+const Asesor_Controller = require("../controllers/asesor_controller.js");
+const Admin_Controller = require("../controllers/admin_controller.js");
+const APL01_Controller = require("../controllers/APL01_controller.js");
 
 //controller asesi
-// router.get("/asesi", Asesi_Controller.getAsesi());
+router.get("/asesi", Asesi_Controller.getAsesi);
 router.post("/add-asesi", Asesi_Controller.createAsesi);
 router.patch(
   "/edit-status-pembayaran/:id",
@@ -18,6 +21,14 @@ router.patch(
 );
 
 // router.use(authentication);
+
+//controller asesor
+router.get("/asesor", Asesor_Controller.showAsesor);
+router.post("/add-asesor", Asesor_Controller.createAsesor);
+
+//controller admin
+router.get("/admin", Admin_Controller.showAdmin);
+router.post("/add-admin", Admin_Controller.createAdmin);
 
 //controller skema sertifikasi
 router.get("/skemasertifikasi", Skema_Controller.showSkema);
@@ -40,6 +51,10 @@ router.post(
 //controller role sertifikasi
 router.get("/role", Role_Controller.showRole);
 router.post("/add-role", Role_Controller.createRole);
+
+//controller APL01
+router.get("/apl01", APL01_Controller.showAPL01);
+router.post("/add-apl01", APL01_Controller.createAPL01);
 
 router.get("/user", User_Controller.showUser);
 router.post("/add-user", User_Controller.createUser);

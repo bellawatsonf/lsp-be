@@ -1,15 +1,17 @@
-untuk hari sabtu
+untuk hari rabu 12/7/2023
 
-server
-table user,asesi, relasi
-crud user,asesi
-ttd admin
-proses verifikasi pembayaran
-autorisasi
-autentikasi
+sever :
+cek lagi field2 di setiap table yang udah dibuat
+cek lagi relasinya
+cek lagi untnuk table usernya, apakah perlu tabel user atau tidak
+buat validasi pada field2 yag perlu
+buat authentication , authorization (dipastikan dlu untuk yg authorization)
+buat login google
 
-client
-dashboard admin
-proses verifikasi pembayaran
+client :
+halaman dashboard crud skema,unit kompetensi, kriteriakerja
+pagination dan box search disetiap dashboard
+rapihin tab
+form rapihin lagi
+cek kondisi navbar supaya pas login gamuncul
 
-cari referensi buat ppt

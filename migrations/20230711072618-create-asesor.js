@@ -31,6 +31,9 @@ module.exports = {
       role: {
         type: Sequelize.STRING,
       },
+      ttd_asesor: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

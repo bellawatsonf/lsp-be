@@ -28,6 +28,8 @@ const uploadstr = upload.fields([
   { name: "surat_pernyataan" },
   { name: "bukti_bayar" },
   { name: "ttd_asesi" },
+  { name: "sertifikat_pelatihan_pendukung" },
+  { name: "ttd_admin" },
 ]);
 
 module.exports = uploadstr;

@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Asesi.belongsTo(models.role, { as: "Roles", foreignKey: "id_role" });
+      // Asesi.belongsTo(models.role, { as: "Roles", foreignKey: "id_role" });
+      Asesi.hasMany(models.APL01, { as: "Asesis", foreignKey: "id_asesi" });
     }
   }
   Asesi.init(
     {
-      id_asesi: DataTypes.INTEGER,
       nama_lengkap: DataTypes.STRING,
       tempat_lahir: DataTypes.STRING,
       tgl_lahir: DataTypes.DATE,
@@ -27,9 +27,11 @@ module.exports = (sequelize, DataTypes) => {
       email_kantor: DataTypes.STRING,
       alamat_kantor: DataTypes.STRING,
       telp: DataTypes.STRING,
+      jabatan: DataTypes.STRING,
       kualifikasi_pendidikan: DataTypes.STRING,
       nama_instansi: DataTypes.STRING,
       tlp_kantor: DataTypes.STRING,
+      hp_kantor: DataTypes.STRING,
       fax: DataTypes.STRING,
       kodepos_kantor: DataTypes.STRING,
       transkrip: DataTypes.STRING,
@@ -39,9 +41,11 @@ module.exports = (sequelize, DataTypes) => {
       surat_pernyataan: DataTypes.STRING,
       bukti_bayar: DataTypes.STRING,
       ttd_asesi: DataTypes.STRING,
-      password: DataTypes.STRING,
+      sertifikat_pelatihan_pendukung: DataTypes.STRING,
       memiliki_nilai_D: DataTypes.BOOLEAN,
-      id_role: DataTypes.INTEGER,
+      tujuan_asesmen: DataTypes.STRING,
+      alasan_penolakan: DataTypes.STRING,
+      role: DataTypes.STRING,
       status_pembayaran: {
         type: DataTypes.STRING,
         defaultValue: "unpaid",
