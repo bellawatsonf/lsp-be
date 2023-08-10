@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const multer = require("multer");
+const { Storage } = require("@google-cloud/storage");
 
 const TYPE_IMAGE = {
   "image/jpg": "jpg",
@@ -7,6 +8,8 @@ const TYPE_IMAGE = {
   "image/png": "png",
 };
 
+let projectId = "feisty-parity-391307";
+let keyName = "key.json";
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, "public/uploads");
@@ -17,8 +20,13 @@ const storage = multer.diskStorage({
     cb(null, `${uuid}.${ext}`);
   },
 });
+// const storageGoogle = new Storage({
+//   projectId,
+//   keyName,
+// });
 
 const upload = multer({ storage });
+// const bucket = storageGoogle.bucket("");
 console.log(upload, "aplot");
 const uploadstr = upload.fields([
   { name: "img_ktp" },
@@ -29,7 +37,7 @@ const uploadstr = upload.fields([
   { name: "bukti_bayar" },
   { name: "ttd_asesi" },
   { name: "sertifikat_pelatihan_pendukung" },
-  { name: "ttd_admin" },
+  // { name: "ttd_admin" },
 ]);
 
 module.exports = uploadstr;

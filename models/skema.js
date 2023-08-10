@@ -10,10 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Skema.hasMany(models.Unit_Kompetensi, {
-        as: "skema",
+        as: "unitkompetensi",
         foreignKey: "id_skema",
       });
       Skema.hasMany(models.Asesor, { as: "Skema", foreignKey: "id_skema" });
+      Skema.hasMany(models.asesi_skema, {
+        as: "skema",
+        foreignKey: "id_skema",
+      });
     }
   }
   Skema.init(

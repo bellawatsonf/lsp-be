@@ -1,8 +1,16 @@
 const { Skema } = require("../models/index.js");
-
+const { Unit_Kompetensi, Kriteria_UnitKerja } = require("../models/index.js");
 class Skema_Controller {
   static showSkema(req, res, next) {
-    Skema.findAll()
+    Skema.findAll({
+      include: [
+        {
+          model: Unit_Kompetensi,
+          as: "unitkompetensi",
+          include: [{ model: Kriteria_UnitKerja, as: "kriteria_unitkerja" }],
+        },
+      ],
+    })
       .then((data) => {
         res.status(200).json({ data });
       })

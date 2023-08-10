@@ -1,11 +1,42 @@
+const { getPagingData, getPagination } = require("../helpers/pagination.js");
 const { encrypt } = require("../middleware/bcrypt.js");
-const { Asesor } = require("../models/index.js");
+const { Asesor, Skema } = require("../models/index.js");
 
 class Asesor_Controller {
   static showAsesor(req, res, next) {
-    Asesor.findAll()
+    const { page, size, title } = req.query;
+    console.log(typeof page, "pg");
+    const { limit, offset } = getPagination(page, size);
+    Asesor.findAll({
+      include: [
+        {
+          model: Skema,
+          as: "Skema",
+        },
+      ],
+    })
       .then((data) => {
-        res.status(200).json({ data });
+        // res.status(200).json({ data });
+        Asesor.findAndCountAll({
+          include: [
+            {
+              model: Skema,
+              as: "Skema",
+            },
+          ],
+          limit,
+          offset,
+        })
+          .then((data) => {
+            const response = getPagingData(data, page, limit);
+            res.send(response);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while retrieving asesor",
+            });
+          });
       })
       .catch((err) => console.log(err));
   }

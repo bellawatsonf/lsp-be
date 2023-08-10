@@ -1,6 +1,7 @@
 const { Asesi } = require("../models/index.js");
 const { FormatDate } = require("../helpers/formatDate.js");
 const { OAuth2Client } = require("google-auth-library");
+const fs = require("fs");
 class Asesi_Controller {
   static getAsesi(req, res, next) {
     Asesi.findAll()
@@ -12,11 +13,21 @@ class Asesi_Controller {
         console.log(err);
       });
   }
+
+  static getAsesiById(req, res, next) {
+    let id = req.params.id;
+    console.log(req.params.id, "params");
+    Asesi.findOne({ where: { id } })
+      .then((data) => {
+        console.log(data);
+        res.status(200).json({ data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   static createAsesi(req, res, next) {
-    console.log(
-      req.files.sertifikat_pelatihan_pendukung[0].destination,
-      "nana"
-    );
+    console.log(req.files.sertifikat_pelatihan_pendukung, "nana");
 
     let input = {
       nama_lengkap: req.body.nama_lengkap,
@@ -86,7 +97,7 @@ class Asesi_Controller {
   }
 
   static updateStatusPembayaranAsesi(req, res, next) {
-    console.log(req.body.status_pembayaran);
+    // console.log(req.body.status_pembayaran);
     let id = req.params.id;
     let input = {
       status_pembayaran: req.body.status_pembayaran,
@@ -98,6 +109,90 @@ class Asesi_Controller {
       })
       .catch((err) => {
         console.log(err);
+      });
+  }
+
+  static editAsesi(req, res, next) {
+    console.log(req.body.tgl_lahir, req.body.ttd_asesi);
+    console.log("masuk");
+    let id = req.params.id;
+
+    let imageAsesi = null;
+    let pathname = null;
+    if (req.body.ttd_asesi !== undefined) {
+      imageAsesi = req.body.ttd_asesi;
+      var base64Data = imageAsesi?.replace("data:image/png;base64,", "");
+      pathname = `public/uploads/ttd_asesi_${req.body.nama_lengkap}.png`;
+      fs.writeFile(pathname, base64Data, "base64", function (err) {
+        console.log(err);
+      });
+    }
+    let birthdate;
+
+    let input = {
+      nama_lengkap: req.body.nama_lengkap,
+      tempat_lahir: req.body.tempat_lahir,
+
+      jenis_kelamin: req.body.jenis_kelamin,
+      kebangsaan: req.body.kebangsaan,
+      jabatan: req.body.jabatan,
+      alamat_rumah: req.body.alamat_rumah,
+      phone_number: req.body.phone_number,
+      email: req.body.email,
+      kodepos: req.body.kodepos,
+      email_kantor: req.body.email_kantor,
+      alamat_kantor: req.body.alamat_kantor,
+      telp: req.body.telp,
+      kualifikasi_pendidikan: req.body.kualifikasi_pendidikan,
+      nama_instansi: req.body.nama_instansi,
+      tlp_kantor: req.body.tlp_kantor,
+      hp_kantor: req.body.hp_kane1tor,
+      fax: req.body.fax,
+      kodepos_kantor: req.body.kodepos_kantor,
+
+      ttd_asesi: pathname,
+      memiliki_nilai_D: req.body.memiliki_nilai_D,
+      role: "asesi",
+      alasan_penolakan: null,
+      tujuan_asesmen: req.body.tujuan_asesmen,
+    };
+
+    if (req.body.tgl_lahir !== undefined) {
+      input.tgl_lahir = req.body.tgl_lahir;
+    }
+    if (req.files !== undefined) {
+      input.transkrip =
+        req.files.transkrip[0].destination +
+        "/" +
+        req.files.transkrip[0].filename;
+      input.ijazah =
+        req.files.ijazah[0].destination + "/" + req.files.ijazah[0].filename;
+      input.bukti_bayar =
+        req.files.bukti_bayar[0].destination +
+        "/" +
+        req.files.bukti_bayar[0].filename;
+      input.sertifikat_pelatihan_pendukung =
+        req.files.sertifikat_pelatihan_pendukung[0].destination +
+        "/" +
+        req.files.sertifikat_pelatihan_pendukung[0].filename;
+      input.img_ktp =
+        req.files.img_ktp[0].destination + "/" + req.files.img_ktp[0].filename;
+      input.pas_foto =
+        req.files.pas_foto[0].destination +
+        "/" +
+        req.files.pas_foto[0].filename;
+      input.surat_pernyataan =
+        req.files.surat_pernyataan[0].destination +
+        "/" +
+        req.files.surat_pernyataan[0].filename;
+    }
+
+    Asesi.update(input, { where: { id } })
+      .then((data) => {
+        res.status(201).json({ data });
+      })
+      .catch((err) => {
+        console.log(err, "eror");
       });
   }
 

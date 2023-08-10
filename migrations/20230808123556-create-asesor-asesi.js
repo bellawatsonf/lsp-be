@@ -2,34 +2,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("APL01s", {
+    await queryInterface.createTable("AsesorAsesis", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      // id_asesi: {
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: "Asesis",
-      //     key: "id",
-      //   },
-      // },
-      id_admin: {
+      id_asesor: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Admins",
+          model: "Asesors",
           key: "id",
         },
       },
-      rekomendasi_sebagai_asesi: {
-        type: Sequelize.BOOLEAN,
-      },
-      id_asesi_skema: {
+      id_asesi: {
         type: Sequelize.INTEGER,
         references: {
-          model: "asesi_skemas",
+          model: "Asesis",
           key: "id",
         },
       },
@@ -44,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("APL01s");
+    await queryInterface.dropTable("AsesorAsesis");
   },
 };

@@ -1,8 +1,20 @@
-const { Kriteria_UnitKerja } = require("../models/index.js");
+const {
+  Kriteria_UnitKerja,
+  Unit_Kompetensi,
+  Skema,
+} = require("../models/index.js");
 
 class Kriteria_UnitKerja_Controller {
   static show_Kriteria_UnitKerja(req, res, next) {
-    Kriteria_UnitKerja.findAll()
+    Kriteria_UnitKerja.findAll({
+      include: [
+        {
+          model: Unit_Kompetensi,
+          as: "Unit_Kompetensi",
+          include: [{ model: Skema }],
+        },
+      ],
+    })
       .then((data) => {
         res.status(200).json({ data });
       })

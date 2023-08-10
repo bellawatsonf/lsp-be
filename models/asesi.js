@@ -10,7 +10,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // Asesi.belongsTo(models.role, { as: "Roles", foreignKey: "id_role" });
-      Asesi.hasMany(models.APL01, { as: "Asesis", foreignKey: "id_asesi" });
+      // Asesi.hasMany(models.APL01, { as: "Asesis", foreignKey: "id_asesi" });
+      Asesi.hasMany(models.asesi_skema, {
+        as: "asesi",
+        foreignKey: "id_asesi",
+      });
+      Asesi.hasMany(models.AsesorAsesi, {
+        as: "Asesi",
+        foreignKey: "id_asesi",
+      });
     }
   }
   Asesi.init(

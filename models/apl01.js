@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      APL01.belongsTo(models.Asesi, { as: "Asesis", foreignKey: "id_asesi" });
+      // APL01.belongsTo(models.Asesi, { as: "Asesis", foreignKey: "id_asesi" });
       APL01.belongsTo(models.Admin, { as: "admins", foreignKey: "id_admin" });
-      APL01.belongsTo(models.Kriteria_UnitKerja, {
-        as: "kriteria_unitkerja",
-        foreignKey: "id_kriteria_unitkerja",
+      APL01.belongsTo(models.asesi_skema, {
+        as: "asesi_skema",
+        foreignKey: "id_asesi_skema",
       });
     }
   }
   APL01.init(
     {
-      id_asesi: DataTypes.INTEGER,
+      // id_asesi: DataTypes.INTEGER,
       id_admin: DataTypes.INTEGER,
       rekomendasi_sebagai_asesi: {
         type: DataTypes.BOOLEAN,
         // defaultValue: false,
       },
-      id_kriteria_unitkerja: DataTypes.INTEGER,
+      id_asesi_skema: DataTypes.INTEGER,
     },
     {
       sequelize,
