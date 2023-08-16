@@ -2,6 +2,7 @@ const { Asesi } = require("../models/index.js");
 const { FormatDate } = require("../helpers/formatDate.js");
 const { OAuth2Client } = require("google-auth-library");
 const fs = require("fs");
+const { bucket } = require("../helpers/multer.js");
 class Asesi_Controller {
   static getAsesi(req, res, next) {
     Asesi.findAll()
@@ -27,73 +28,89 @@ class Asesi_Controller {
       });
   }
   static createAsesi(req, res, next) {
-    console.log(req.files.sertifikat_pelatihan_pendukung, "nana");
+    // console.log(req.files, "nana");
 
+    // if (req.files) {
+    //   const blob = bucket.file(req.files);
+    //   const blobStream = blob.createWriteStream();
+    //   console.log(blob, blobStream, "result");
+    //   blobStream.on(
+    //     ("finish",
+    //     () => {
+    //       res.status(200).send("success");
+    //     })
+    //   );
+    // }
     let input = {
-      nama_lengkap: req.body.nama_lengkap,
-      tempat_lahir: req.body.tempat_lahir,
-      tgl_lahir: FormatDate(req.body.tgl_lahir),
-      jenis_kelamin: req.body.jenis_kelamin,
-      kebangsaan: req.body.kebangsaan,
-      jabatan: req.body.jabatan,
-      alamat_rumah: req.body.alamat_rumah,
-      phone_number: req.body.phone_number,
-      email: req.body.email,
-      kodepos: req.body.kodepos,
-      email_kantor: req.body.email_kantor,
-      alamat_kantor: req.body.alamat_kantor,
-      telp: req.body.telp,
-      kualifikasi_pendidikan: req.body.kualifikasi_pendidikan,
-      nama_instansi: req.body.nama_instansi,
-      tlp_kantor: req.body.tlp_kantor,
-      hp_kantor: req.body.hp_kane1tor,
-      fax: req.body.fax,
-      kodepos_kantor: req.body.kodepos_kantor,
-      transkrip:
-        req.files.transkrip[0].destination +
-        "/" +
-        req.files.transkrip[0].filename,
-      ijazah:
-        req.files.ijazah[0].destination + "/" + req.files.ijazah[0].filename,
-      bukti_bayar:
-        req.files.bukti_bayar[0].destination +
-        "/" +
-        req.files.bukti_bayar[0].filename,
-      sertifikat_pelatihan_pendukung:
-        req.files.sertifikat_pelatihan_pendukung[0].destination +
-        "/" +
-        req.files.sertifikat_pelatihan_pendukung[0].filename,
-      img_ktp:
-        req.files.img_ktp[0].destination + "/" + req.files.img_ktp[0].filename,
-      pas_foto:
-        req.files.pas_foto[0].destination +
-        "/" +
-        req.files.pas_foto[0].filename,
-      surat_pernyataan:
-        req.files.surat_pernyataan[0].destination +
-        "/" +
-        req.files.surat_pernyataan[0].filename,
-      ttd_asesi:
-        req.files.ttd_asesi[0].destination +
-        "/" +
-        req.files.ttd_asesi[0].filename,
-      memiliki_nilai_D: req.body.memiliki_nilai_D,
-      role: "asesi",
-      alasan_penolakan: null,
-      tujuan_asesmen: req.body.tujuan_asesmen,
-      status_pembayaran: "pending",
+      ijazah: req.files.ijazah[0].originalname,
+      // transkrip: req.files.transkrip[0].originalname,
     };
     console.log(input, "input");
-    Asesi.create(input)
-      .then((data) => {
-        console.log(data, "data");
-        res.status(201).json({
-          data,
-        });
-      })
-      .catch((err) => {
-        console.log(err, "error");
-      });
+    // let input = {
+    //   nama_lengkap: req.body.nama_lengkap,
+    //   tempat_lahir: req.body.tempat_lahir,
+    //   // tgl_lahir: FormatDate(req.body.tgl_lahir),
+    //   jenis_kelamin: req.body.jenis_kelamin,
+    //   kebangsaan: req.body.kebangsaan,
+    //   jabatan: req.body.jabatan,
+    //   alamat_rumah: req.body.alamat_rumah,
+    //   phone_number: req.body.phone_number,
+    //   email: req.body.email,
+    //   kodepos: req.body.kodepos,
+    //   email_kantor: req.body.email_kantor,
+    //   alamat_kantor: req.body.alamat_kantor,
+    //   telp: req.body.telp,
+    //   kualifikasi_pendidikan: req.body.kualifikasi_pendidikan,
+    //   nama_instansi: req.body.nama_instansi,
+    //   tlp_kantor: req.body.tlp_kantor,
+    //   hp_kantor: req.body.hp_kane1tor,
+    //   fax: req.body.fax,
+    //   kodepos_kantor: req.body.kodepos_kantor,
+    //   transkrip:
+    //     req.files.transkrip[0].destination +
+    //     "/" +
+    //     req.files.transkrip[0].filename,
+    //   ijazah:
+    //     req.files.ijazah[0].destination + "/" + req.files.ijazah[0].filename,
+    //   bukti_bayar:
+    //     req.files.bukti_bayar[0].destination +
+    //     "/" +
+    //     req.files.bukti_bayar[0].filename,
+    //   sertifikat_pelatihan_pendukung:
+    //     req.files.sertifikat_pelatihan_pendukung[0].destination +
+    //     "/" +
+    //     req.files.sertifikat_pelatihan_pendukung[0].filename,
+    //   img_ktp:
+    //     req.files.img_ktp[0].destination + "/" + req.files.img_ktp[0].filename,
+    //   pas_foto:
+    //     req.files.pas_foto[0].destination +
+    //     "/" +
+    //     req.files.pas_foto[0].filename,
+    //   surat_pernyataan:
+    //     req.files.surat_pernyataan[0].destination +
+    //     "/" +
+    //     req.files.surat_pernyataan[0].filename,
+    //   ttd_asesi:
+    //     req.files.ttd_asesi[0].destination +
+    //     "/" +
+    //     req.files.ttd_asesi[0].filename,
+    //   memiliki_nilai_D: req.body.memiliki_nilai_D,
+    //   role: "asesi",
+    //   alasan_penolakan: null,
+    //   tujuan_asesmen: req.body.tujuan_asesmen,
+    //   status_pembayaran: "pending",
+    // };
+    // // console.log(input, "input");
+    // Asesi.create(input)
+    //   .then((data) => {
+    //     // console.log(data, "data");
+    //     res.status(201).json({
+    //       data,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, "error");
+    //   });
   }
 
   static updateStatusPembayaranAsesi(req, res, next) {
@@ -113,8 +130,8 @@ class Asesi_Controller {
   }
 
   static editAsesi(req, res, next) {
-    console.log(req.body.tgl_lahir, req.body.ttd_asesi);
-    console.log("masuk");
+    // console.log(req.files, "edit");
+    // console.log("masuk");
     let id = req.params.id;
 
     let imageAsesi = null;
@@ -160,27 +177,42 @@ class Asesi_Controller {
     if (req.body.tgl_lahir !== undefined) {
       input.tgl_lahir = req.body.tgl_lahir;
     }
-    if (req.files !== undefined) {
+    if (req.files.transkrip !== undefined) {
       input.transkrip =
         req.files.transkrip[0].destination +
         "/" +
         req.files.transkrip[0].filename;
+    }
+    if (req.files.ijazah !== undefined) {
       input.ijazah =
         req.files.ijazah[0].destination + "/" + req.files.ijazah[0].filename;
+    }
+    if (req.files.bukti_bayar !== undefined) {
       input.bukti_bayar =
         req.files.bukti_bayar[0].destination +
         "/" +
         req.files.bukti_bayar[0].filename;
+    }
+    if (req.files.sertifikat_pelatihan_pendukung !== undefined) {
       input.sertifikat_pelatihan_pendukung =
         req.files.sertifikat_pelatihan_pendukung[0].destination +
         "/" +
         req.files.sertifikat_pelatihan_pendukung[0].filename;
+    }
+
+    if (req.files.img_ktp !== undefined) {
       input.img_ktp =
         req.files.img_ktp[0].destination + "/" + req.files.img_ktp[0].filename;
+    }
+
+    if (req.files.pas_foto !== undefined) {
       input.pas_foto =
         req.files.pas_foto[0].destination +
         "/" +
         req.files.pas_foto[0].filename;
+    }
+
+    if (req.files.surat_pernyataan !== undefined) {
       input.surat_pernyataan =
         req.files.surat_pernyataan[0].destination +
         "/" +
@@ -189,7 +221,7 @@ class Asesi_Controller {
 
     Asesi.update(input, { where: { id } })
       .then((data) => {
-        res.status(201).json({ data });
+        res.status(201).json({ data: input.transkrip });
       })
       .catch((err) => {
         console.log(err, "eror");

@@ -44,6 +44,9 @@ router.patch("/add-ttdadmin/:id", Admin_Controller.createTtdAdmin);
 //controller skema sertifikasi
 router.get("/skemasertifikasi", Skema_Controller.showSkema);
 router.post("/add-skemasertifikasi", Skema_Controller.createSkema);
+router.get("/get-skemaById/:id", Skema_Controller.getSkemaById);
+router.put("/edit-skemaById/:id", Skema_Controller.editSkema);
+router.delete("/delete-skema/:id", Skema_Controller.deleteSkema);
 
 //controller unit komptensi
 router.get("/unitkompetensi", Unit_Kompetensi_Controller.show_Unit_Kompetensi);
@@ -51,12 +54,30 @@ router.post(
   "/add-unitkompetensi",
   Unit_Kompetensi_Controller.create_Unit_Kompetensi
 );
+router.get(
+  "/unitkompetensibyid/:id",
+  Unit_Kompetensi_Controller.getUnitKompetensiById
+);
+router.put(
+  "/edit-unitkompetensibyid/:id",
+  Unit_Kompetensi_Controller.editUnitKompetensi
+);
+router.delete(
+  "/delete-unitkompetensibyid/:id",
+  Unit_Kompetensi_Controller.deleteUnitKompetensi
+);
 
 //controller kriteria unit kerja
 router.get("/kriteria-unitkerja", Kriteria_UnitKerja.show_Kriteria_UnitKerja);
 router.post(
   "/add-kriteria-unitkerja",
   Kriteria_UnitKerja.create_Kriteria_UnitKerja
+);
+router.get("/kriteriakerjabyid/:id", Kriteria_UnitKerja.getKriteriaKerjaById);
+router.put("/edit-kriteriakerjabyid/:id", Kriteria_UnitKerja.editKriteriaKerja);
+router.delete(
+  "/delete-kriteriakerjabyid/:id",
+  Kriteria_UnitKerja.deleteKriteriaKerja
 );
 
 //controller asesi-skema

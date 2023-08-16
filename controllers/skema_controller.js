@@ -31,12 +31,35 @@ class Skema_Controller {
       });
   }
 
+  static getSkemaById(req, res, next) {
+    let id = req.params.id;
+    console.log(id, "idservice");
+    Skema.findOne({
+      where: { id },
+      include: [
+        {
+          model: Unit_Kompetensi,
+          as: "unitkompetensi",
+          include: [{ model: Kriteria_UnitKerja, as: "kriteria_unitkerja" }],
+        },
+      ],
+    })
+      .then((data) => {
+        console.log(data, "dataservice");
+        res.status(200).json({ data });
+      })
+      .catch((err) => console.log(err));
+  }
+
   static editSkema(req, res, next) {
+    let id = req.params.id;
+    console.log(id);
     let input = {
       no_skema: req.body.no_skema,
       nama_skema: req.body.nama_skema,
     };
-    Skema.update(input)
+    console.log(input, "inputskema");
+    Skema.update(input, { where: { id } })
       .then((data) => {
         res.status(200).json({ msg: "Data berhasil diubah", data });
       })
@@ -46,7 +69,9 @@ class Skema_Controller {
   }
 
   static deleteSkema(req, res, next) {
-    Skema.delete()
+    let id = req.params.id;
+    console.log(id, "idprm");
+    Skema.destroy({ where: { id } })
       .then((data) => {
         res.status(200).json({ msg: "Data berhasil dihapus" });
       })
