@@ -12,6 +12,15 @@ module.exports = {
       nama_lengkap: {
         type: Sequelize.STRING,
       },
+      nik: {
+        type: Sequelize.STRING,
+      },
+      provinsi: {
+        type: Sequelize.INTEGER,
+      },
+      kota: {
+        type: Sequelize.INTEGER,
+      },
       tempat_lahir: {
         type: Sequelize.STRING,
       },
@@ -35,6 +44,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       kodepos: {
+        type: Sequelize.STRING,
+      },
+      nama_pemilik_rekening: {
         type: Sequelize.STRING,
       },
       email_kantor: {

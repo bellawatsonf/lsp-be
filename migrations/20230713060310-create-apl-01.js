@@ -33,6 +33,13 @@ module.exports = {
           key: "id",
         },
       },
+      id_asesi: {
+        type: Sequelize.INTEGER,
+      },
+      status_ujikom: {
+        type: Sequelize.STRING,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

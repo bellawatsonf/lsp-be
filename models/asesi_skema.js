@@ -27,6 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       id_asesi: DataTypes.INTEGER,
       id_skema: DataTypes.INTEGER,
+      jenis_paket: DataTypes.STRING,
+      status_cek: DataTypes.STRING,
     },
     {
       sequelize,

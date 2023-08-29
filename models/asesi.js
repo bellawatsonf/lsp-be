@@ -19,12 +19,19 @@ module.exports = (sequelize, DataTypes) => {
         as: "Asesi",
         foreignKey: "id_asesi",
       });
+      Asesi.hasMany(models.Info, {
+        as: "dataAsesi",
+        foreignKey: "id_asesi",
+      });
     }
   }
   Asesi.init(
     {
       nama_lengkap: DataTypes.STRING,
+      nik: DataTypes.STRING,
       tempat_lahir: DataTypes.STRING,
+      provinsi: DataTypes.INTEGER,
+      kota: DataTypes.INTEGER,
       tgl_lahir: DataTypes.DATE,
       jenis_kelamin: DataTypes.STRING,
       kebangsaan: DataTypes.STRING,
@@ -54,6 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       tujuan_asesmen: DataTypes.STRING,
       alasan_penolakan: DataTypes.STRING,
       role: DataTypes.STRING,
+      nama_pemilik_rekening: DataTypes.STRING,
       status_pembayaran: {
         type: DataTypes.STRING,
         defaultValue: "unpaid",

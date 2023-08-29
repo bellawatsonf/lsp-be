@@ -21,6 +21,7 @@ class Skema_Controller {
     let input = {
       no_skema: req.body.no_skema,
       nama_skema: req.body.nama_skema,
+      kuota: req.body.kuota,
     };
     Skema.create(input)
       .then((data) => {
@@ -57,6 +58,7 @@ class Skema_Controller {
     let input = {
       no_skema: req.body.no_skema,
       nama_skema: req.body.nama_skema,
+      kuota: req.body.kuota,
     };
     console.log(input, "inputskema");
     Skema.update(input, { where: { id } })

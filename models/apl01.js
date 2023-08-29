@@ -26,6 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         // defaultValue: false,
       },
       id_asesi_skema: DataTypes.INTEGER,
+      id_asesi: DataTypes.INTEGER,
+      status_ujikom: DataTypes.STRING,
     },
     {
       sequelize,

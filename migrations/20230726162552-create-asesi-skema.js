@@ -23,6 +23,12 @@ module.exports = {
           key: "id",
         },
       },
+      jenis_paket: {
+        type: Sequelize.STRING,
+      },
+      status_cek: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

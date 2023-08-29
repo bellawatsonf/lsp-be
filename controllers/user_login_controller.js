@@ -126,13 +126,14 @@ class User_Login_Controller {
             message: "Login berhasil",
             role: data.role,
             id: data.id,
+            nama: data.nama,
             token,
           });
         } else {
           throw { email: "DataTidakValid" };
         }
       })
-      .catch((err) => next(err));
+      .catch((err) => console.log(err));
   }
   //   static loginAsesor(req, res, next) {
   //     const { email, password } = req.body;

@@ -15,7 +15,8 @@ const User_Login_Controller = require("../controllers/user_login_controller.js")
 const Asesi_Skema_Controller = require("../controllers/asesiskema_controller.js");
 const Jadwal_Controller = require("../controllers/jadwal_controller.js");
 const AsesorAsesi_Controller = require("../controllers/asesor_asesi_controller.js");
-
+const Provinsi_Controller = require("../controllers/provinsi_controller.js");
+const Info_Controller = require("../controllers/info_controller.js");
 //controller login
 router.post("/loginGoogle", User_Login_Controller.loginGoogle);
 router.post("/login", User_Login_Controller.loginAdmin);
@@ -29,17 +30,25 @@ router.patch(
   Asesi_Controller.updateStatusPembayaranAsesi
 );
 router.put("/edit-asesi/:id", Asesi_Controller.editAsesi);
+// router.put("/edit-formapl01-asesi/:id", Asesi_Controller.editAsesiDiFormApl);
 
 // router.use(authentication);
 
 //controller asesor
 router.get("/asesor", Asesor_Controller.showAsesor);
 router.post("/add-asesor", Asesor_Controller.createAsesor);
+// router.patch("/add-ttdasesor/:id", Admin_Controller.createTtdAsesor);
+router.delete("/delete-asesor/:id", Asesor_Controller.deleteAsesor);
+router.patch("/edit-asesor/:id", Asesor_Controller.editAsesor);
+router.get("/get-asesorById/:id", Asesor_Controller.showAsesorById);
 
 //controller admin
 router.get("/admin", Admin_Controller.showAdmin);
 router.post("/add-admin", Admin_Controller.createAdmin);
 router.patch("/add-ttdadmin/:id", Admin_Controller.createTtdAdmin);
+router.delete("/delete-admin/:id", Admin_Controller.deleteAdmin);
+router.patch("/edit-admin/:id", Admin_Controller.editAdmin);
+router.get("/get-adminById/:id", Admin_Controller.showAdminById);
 
 //controller skema sertifikasi
 router.get("/skemasertifikasi", Skema_Controller.showSkema);
@@ -84,6 +93,12 @@ router.delete(
 router.get("/asesi-skema", Asesi_Skema_Controller.show_Asesi_Skema);
 router.get("/asesi-skema/:id", Asesi_Skema_Controller.getAsesiSkemaById);
 router.post("/add-asesi-skema", Asesi_Skema_Controller.create_asesi_skema);
+router.get("/get-detail/:id", Asesi_Skema_Controller.getAsesiSkemaDetail);
+router.get("/delete-asesiskema/:id", Asesi_Skema_Controller.deleteAsesiSkema);
+router.patch(
+  "/update-status-cek/:id",
+  Asesi_Skema_Controller.updateStatusCekAsesiSkema
+);
 
 //controller role sertifikasi
 router.get("/role", Role_Controller.showRole);
@@ -92,6 +107,8 @@ router.post("/add-role", Role_Controller.createRole);
 //controller APL01
 router.get("/apl01", APL01_Controller.showAPL01);
 router.post("/add-apl01", APL01_Controller.createAPL01);
+router.get("/apl01byid/:id", APL01_Controller.showAPL01ById);
+router.get("/apl01byuser/:id", APL01_Controller.showAPL01ByUser);
 
 //controller jadwal
 router.get("/jadwal", Jadwal_Controller.showJadwal);
@@ -99,9 +116,17 @@ router.post("/add-jadwal", Jadwal_Controller.createJadwal);
 
 //controller asesor-asesi
 router.get("/asesor", AsesorAsesi_Controller.showAsesorAsesi);
-router.post("/add-asesor-asesi/:tgl", AsesorAsesi_Controller.createAsesorAsesi);
+// router.post("/add-asesor-asesi/:tgl", AsesorAsesi_Controller.createAsesorAsesi);
 
 router.get("/user", User_Controller.showUser);
 router.post("/add-user", User_Controller.createUser);
 
+router.get("/provinsi", Provinsi_Controller.getProvinsi);
+router.get("/kota/:idProv", Provinsi_Controller.getKota);
+
+router.get("/info/:idUser", Info_Controller.getInfoByUser);
+
+//download img
+router.get("/download-asesi/:namafileparam", Asesi_Controller.downloadAsesi);
+router.get("/download-admin/:namafileparam", Admin_Controller.downloadAdmin);
 module.exports = router;

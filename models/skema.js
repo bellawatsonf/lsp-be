@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       no_skema: DataTypes.STRING,
       nama_skema: DataTypes.STRING,
+      kuota: DataTypes.STRING,
     },
     {
       sequelize,

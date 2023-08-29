@@ -16,9 +16,9 @@ app.use(express.json());
 // app.use("/static", express.static(resolve("public")));
 
 //ini untuk multer
-app.use("/public/uploads", express.static(resolve("public/uploads"))); //unutk mengekpos path agar bisa di akses diurl ==> diurl nulisnya /localhost:3000/public/upload/namafileimagesnya.png
-
+// app.use("/public/uploads", express.static(resolve("public/uploads"))); //unutk mengekpos path agar bisa di akses diurl ==> diurl nulisnya /localhost:3000/public/upload/namafileimagesnya.png
 app.use(uploadstr);
+
 app.use(router);
 // app.use(errorHandler);
 
