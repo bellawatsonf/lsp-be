@@ -53,7 +53,11 @@ class APL01_Controller {
           info_status: "Data Asesi",
           id_asesi: req.body.id_asesi,
           deskripsi_info: "Permohonan Sertifikasi Anda Terverifikasi",
-        });
+        })
+          .then((info) => {
+            res.status(200).json({ info });
+          })
+          .catch((error) => console.log(error));
       })
       .catch((err) => {
         console.log(err, "eror");
