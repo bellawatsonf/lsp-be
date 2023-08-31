@@ -93,18 +93,18 @@ class asesi_skema_Controller {
               )
                 .then((hasil) => {
                   res.status(200).json(hasil);
-                  if (req.body.jenis_paket === "ujikom") {
-                    Info.create({
-                      id_asesi: req.body.id_asesi,
-                      info_status:
-                        "Anda berhasil melakukan pendaftaran sertifikasi",
-                      deskripsi_info: `Skema : ${dataSkema.nama_skema} dengan Jenis Paket : ${req.body.jenis_paket}`,
+                  // if (req.body.jenis_paket === "ujikom") {
+                  Info.create({
+                    id_asesi: req.body.id_asesi,
+                    info_status:
+                      "Anda berhasil melakukan pendaftaran sertifikasi",
+                    deskripsi_info: `Skema : ${dataSkema.nama_skema} dengan Jenis Paket : ${req.body.jenis_paket}`,
+                  })
+                    .then((dataInfo) => {
+                      res.status(200).json({ msg: "berhasil membuat info" });
                     })
-                      .then((dataInfo) => {
-                        res.status(200).json({ msg: "berhasil membuat info" });
-                      })
-                      .catch((errorinfo) => console.log(errorinfo));
-                  }
+                    .catch((errorinfo) => console.log(errorinfo));
+                  // }
                 })
                 .catch((eror) => {
                   console.log(eror, "eror");
@@ -156,6 +156,7 @@ class asesi_skema_Controller {
 
   static updateStatusCekAsesiSkema(req, res, next) {
     // console.log(req.body.status_pembayaran);
+    console.log("masuk update status");
     let id = req.params.id;
     let input = {
       status_cek: req.body.status_cek,
@@ -166,6 +167,26 @@ class asesi_skema_Controller {
       .then((data) => {
         res.status(200).json({ data });
         console.log(data[1][0].id_asesi);
+        if (req.body.status_cek !== "revisi") {
+          Asesi.update(
+            { where: { id: data[1][0].id_asesi } },
+            { alasan_penolakan: null }
+          )
+            .then(() => {
+              res.status(200).json({ msg: "berhasil memperbaiki dat" });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          Asesi.update(input, { where: { id: data[1][0].id_asesi } })
+            .then(() => {
+              res.status(200).json({ msg: "berhasil memperbaiki dat" });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
         // if (req.body.status_cek !== "revisi") {
         //   // Info.create({info_status:'Data Asesi',deskripsi_info:'pesan tolaknya sesuai sama inputan'})
         // } else if (req.body.status_cek === "terima") {
@@ -183,7 +204,7 @@ class asesi_skema_Controller {
   }
   static deleteAsesiSkema(req, res, next) {
     let id = req.params.id;
-    console.log(id);
+    console.log("masuk delete", id);
     asesi_skema
       .findOne({ where: { id } })
       .then((data) => {

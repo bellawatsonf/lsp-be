@@ -169,7 +169,7 @@ class Asesi_Controller {
     await bucket.file(fileName).download(options);
 
     console.log(
-      `gs://${bucket.name}/${fileName} downloaded to ${destFileName}.`
+      `gs://${bucket.name}/${fileName} downloaded to ${destFileName}s`
     );
   }
   static async downloadAsesi(req, res, next) {
@@ -208,11 +208,12 @@ class Asesi_Controller {
 
     let dataStorage = [];
     let dataAsesi = {};
+    const uuid = crypto.randomUUID();
 
     if (req.body.ttd_asesi !== undefined) {
       imageAsesi = req.body.ttd_asesi;
       var base64Data = imageAsesi?.replace("data:image/png;base64,", "");
-      pathname = `public/uploads/ttd_asesi_${req.body.nama_lengkap}.png`;
+      pathname = `public/uploads/${req.body.nama_lengkap}_ttd_asesi_${uuid}.png`;
       fs.writeFile(pathname, base64Data, "base64", function (err) {
         console.log(err);
       });
@@ -225,11 +226,10 @@ class Asesi_Controller {
         console.log(req.body, "requezbodyyyy");
         dataAsesi = data;
         let ttd_file = "";
-        const uuid = crypto.randomUUID();
         if (pathname) {
           ttd_file = pathname.split(".").pop();
           bucket.upload(pathname, {
-            destination: `${data.nama_lengkap}_ttd_asesi_${uuid}.${ttd_file}`,
+            destination: `${data.nama_lengkap}_ttd_asesi_${uuid}.png`,
           });
         }
         let input = {
@@ -255,7 +255,7 @@ class Asesi_Controller {
           kodepos_kantor: req.body.kodepos_kantor,
           provinsi: req.body.provinsi,
           kota: req.body.kota,
-          ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi_${uuid}.${ttd_file}`,
+          ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi_${uuid}.png`,
           memiliki_nilai_D: req.body.memiliki_nilai_D,
           role: "asesi",
           alasan_penolakan: req.body.alasan_penolakan,
@@ -393,12 +393,19 @@ class Asesi_Controller {
 
         Asesi.update(input, { where: { id } })
           .then((dataAsesi) => {
-            if (req.body.alasan_penolakan !== null) {
+            if (
+              req.body.alasan_penolakan ||
+              req.body.alasan_penolakan !== null
+            ) {
               Info.create({
                 info_status: "Data Asesi",
                 id_asesi: data.id,
                 deskripsi_info: req.body.alasan_penolakan,
               });
+              // .then(()=>{
+              //   res.status(200).json({msg:'Berhasil merubah data'})
+              // })
+              // .cathc
             }
             res.status(201).json({ data });
           })

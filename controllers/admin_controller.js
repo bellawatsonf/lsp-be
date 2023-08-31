@@ -2,6 +2,8 @@ const { decrypt } = require("dotenv");
 const { encrypt } = require("../middleware/bcrypt.js");
 const { Admin } = require("../models/index.js");
 const fs = require("fs");
+const Fs = require("fs-extra");
+
 const { getPagination, getPagingData } = require("../helpers/pagination.js");
 const { Storage } = require("@google-cloud/storage");
 let projectId = "lsp-stiami";
@@ -103,6 +105,7 @@ class Admin_Controller {
   }
 
   static async downloadFile(fileName, destFileName) {
+    console.log(destFileName, "det");
     const options = {
       destination: destFileName,
     };
@@ -111,7 +114,7 @@ class Admin_Controller {
     await bucket.file(fileName).download(options);
 
     console.log(
-      `gs://${bucket.name}/${fileName} downloaded to ${destFileName}.`
+      `gs://${bucket.name}/${fileName} downloaded to ${destFileName}`
     );
   }
   static async downloadAdmin(req, res, next) {
@@ -121,6 +124,7 @@ class Admin_Controller {
     console.log(namafileparam, "fileparam");
     let namafile = namafileparam;
     let destFileName = path.join(tempDir, namafile);
+    console.log(destFileName, "deset");
     try {
       await Admin_Controller.downloadFile(namafile, destFileName);
     } catch (error) {
@@ -129,6 +133,7 @@ class Admin_Controller {
 
     const readStream = fs.createReadStream(destFileName);
     let type = namafileparam.split(".").pop();
+    console.log(type);
     res.writeHead(200, { "Content-type": `image/${type}` });
     readStream.pipe(res);
   }
@@ -148,16 +153,17 @@ class Admin_Controller {
     // fs.writeFile(pathname, base64Data, "base64", function (err) {
     //   console.log(err);
     // });
+    let ttd_file = "";
+    const uuid = crypto.randomUUID();
     if (req.body.ttd_admin !== undefined) {
       imageAdmin = req.body.ttd_admin;
       var base64Data = imageAdmin?.replace("data:image/png;base64,", "");
-      pathname = `public/uploads/ttd_admin_${id}.png`;
+      pathname = `public/uploads/ttd_admin_${id}_${uuid}.png`;
       fs.writeFile(pathname, base64Data, "base64", function (err) {
         console.log(err);
       });
     }
-    let ttd_file = "";
-    const uuid = crypto.randomUUID();
+
     // const readData = fs.readFileSync("public/uploads/ttd_admin.png", "utf8");
     // console.log(readData.toString());
     if (pathname) {
@@ -165,6 +171,7 @@ class Admin_Controller {
       bucket.upload(pathname, {
         destination: `ttd_admin_${id}_${uuid}.${ttd_file}`,
       });
+      // Fs.remove(`${pathname}`);
     }
     let input = {
       ttd_admin: `https://storage.googleapis.com/${bucket.name}/ttd_admin_${id}_${uuid}.${ttd_file}`,

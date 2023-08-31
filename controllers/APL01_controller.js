@@ -56,6 +56,20 @@ class APL01_Controller {
         })
           .then((info) => {
             res.status(200).json({ info });
+            Asesi.findOne({ where: { id: req.body.id_asesi } })
+              .then(() => {
+                Asesi.update(
+                  { status_pembayaran: "paid" },
+                  { where: { id: req.body.id_asesi } }
+                )
+                  .then((result) => {
+                    res.status(200).json({ msg: "Berhasil memperbaiki data" });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((eror) => console.log(eror));
           })
           .catch((error) => console.log(error));
       })
