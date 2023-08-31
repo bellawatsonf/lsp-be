@@ -63,7 +63,13 @@ class APL01_Controller {
                   { where: { id: req.body.id_asesi } }
                 )
                   .then((result) => {
-                    res.status(200).json({ msg: "Berhasil memperbaiki data" });
+                    // res.status(200).json({ msg: "Berhasil memperbaiki data" });
+                    Info.crate({
+                      deskripsi_info:
+                        "Pembayaran sertifikasi anda terverifikasi",
+                      status: "Data Asesi",
+                      id_asesi: req.body.id_asesi,
+                    });
                   })
                   .catch((error) => {
                     console.log(error);

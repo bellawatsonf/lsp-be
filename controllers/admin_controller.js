@@ -158,7 +158,7 @@ class Admin_Controller {
     if (req.body.ttd_admin !== undefined) {
       imageAdmin = req.body.ttd_admin;
       var base64Data = imageAdmin?.replace("data:image/png;base64,", "");
-      pathname = `public/uploads/ttd_admin_${id}_${uuid}.png`;
+      pathname = `public/uploads/ttd_admin_${id}.png`;
       fs.writeFile(pathname, base64Data, "base64", function (err) {
         console.log(err);
       });
@@ -169,12 +169,12 @@ class Admin_Controller {
     if (pathname) {
       ttd_file = pathname.split(".").pop();
       bucket.upload(pathname, {
-        destination: `ttd_admin_${id}_${uuid}.${ttd_file}`,
+        destination: `ttd_admin_${id}.png`,
       });
       // Fs.remove(`${pathname}`);
     }
     let input = {
-      ttd_admin: `https://storage.googleapis.com/${bucket.name}/ttd_admin_${id}_${uuid}.${ttd_file}`,
+      ttd_admin: `https://storage.googleapis.com/${bucket.name}/ttd_admin_${id}.png`,
     };
     console.log(input, "inputadmin");
     Admin.update(input, { where: { id }, returning: true })

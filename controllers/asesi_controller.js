@@ -169,7 +169,7 @@ class Asesi_Controller {
     await bucket.file(fileName).download(options);
 
     console.log(
-      `gs://${bucket.name}/${fileName} downloaded to ${destFileName}s`
+      `gs://${bucket.name}/${fileName} downloaded to ${destFileName}`
     );
   }
   static async downloadAsesi(req, res, next) {
@@ -213,7 +213,7 @@ class Asesi_Controller {
     if (req.body.ttd_asesi !== undefined) {
       imageAsesi = req.body.ttd_asesi;
       var base64Data = imageAsesi?.replace("data:image/png;base64,", "");
-      pathname = `public/uploads/${req.body.nama_lengkap}_ttd_asesi_${uuid}.png`;
+      pathname = `public/uploads/${req.body.nama_lengkap}_ttd_asesi.png`;
       fs.writeFile(pathname, base64Data, "base64", function (err) {
         console.log(err);
       });
@@ -229,7 +229,7 @@ class Asesi_Controller {
         if (pathname) {
           ttd_file = pathname.split(".").pop();
           bucket.upload(pathname, {
-            destination: `${data.nama_lengkap}_ttd_asesi_${uuid}.png`,
+            destination: `${data.nama_lengkap}_ttd_asesi.png`,
           });
         }
         let input = {
@@ -255,7 +255,7 @@ class Asesi_Controller {
           kodepos_kantor: req.body.kodepos_kantor,
           provinsi: req.body.provinsi,
           kota: req.body.kota,
-          ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi_${uuid}.png`,
+          ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`,
           memiliki_nilai_D: req.body.memiliki_nilai_D,
           role: "asesi",
           alasan_penolakan: req.body.alasan_penolakan,
@@ -390,24 +390,26 @@ class Asesi_Controller {
         //   // processFile(content);   // Or put the next step in a function and invoke it
         // });
         // }
-
+        console.log("lala", req.body.alasan_penolakan);
         Asesi.update(input, { where: { id } })
           .then((dataAsesi) => {
-            if (
-              req.body.alasan_penolakan ||
-              req.body.alasan_penolakan !== null
-            ) {
-              Info.create({
-                info_status: "Data Asesi",
-                id_asesi: data.id,
-                deskripsi_info: req.body.alasan_penolakan,
-              });
-              // .then(()=>{
-              //   res.status(200).json({msg:'Berhasil merubah data'})
-              // })
-              // .cathc
-            }
             res.status(201).json({ data });
+
+            // if (
+            //   (req.body.alasan_penolakan ||
+            //     req.body.alasan_penolakan !== null) &&
+            //   req.body.status_pembayaran
+            // ) {
+            //   Info.create({
+            //     info_status: "Data Asesi",
+            //     id_asesi: data.id,
+            //     deskripsi_info: req.body.alasan_penolakan,
+            //   })
+
+            //     .catch((err) => {
+            //       console.log(err);
+            //     });
+            // }
           })
           .catch((err) => {
             console.log(err, "eror");
