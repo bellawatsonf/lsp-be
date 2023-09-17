@@ -41,6 +41,28 @@ class Asesor_Controller {
       .catch((err) => console.log(err));
   }
 
+  static showAsesorWithoutPaging(req, res, next) {
+    // const { page, size, title } = req.query;
+    // console.log(typeof page, "pg");
+    // const { limit, offset } = getPagination(page, size);
+    Asesor.findAll({
+      include: [
+        {
+          model: Skema,
+          as: "Skema",
+        },
+      ],
+    })
+
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving asesor",
+        });
+      });
+  }
   static createAsesor(req, res, next) {
     let input = {
       no_reg: req.body.no_reg,

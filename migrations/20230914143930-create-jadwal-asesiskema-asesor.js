@@ -2,27 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Infos", {
+    await queryInterface.createTable("jadwal_asesiskema_asesors", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      id_asesi: {
+      id_jadwal_asesiskema: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Asesis",
+          model: "jadwal_asesiskemas",
           key: "id",
         },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      info_status: {
-        type: Sequelize.STRING,
-      },
-      deskripsi_info: {
-        type: Sequelize.STRING,
+      id_asesor: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Asesors",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Infos");
+    await queryInterface.dropTable("jadwal_asesiskema_asesors");
   },
 };

@@ -18,6 +18,8 @@ module.exports = {
           model: "Unit_Kompetensis",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       kriteriakerja: {
         type: Sequelize.ARRAY(Sequelize.STRING),

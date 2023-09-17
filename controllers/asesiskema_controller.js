@@ -203,6 +203,7 @@ class asesi_skema_Controller {
       });
   }
   static deleteAsesiSkema(req, res, next) {
+    console.log("masukdelete");
     let id = req.params.id;
     console.log("masuk delete", id);
     asesi_skema

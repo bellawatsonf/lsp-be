@@ -176,7 +176,7 @@ class Admin_Controller {
     let input = {
       ttd_admin: `https://storage.googleapis.com/${bucket.name}/ttd_admin_${id}.png`,
     };
-    console.log(input, "inputadmin");
+    console.log(input, "inputadmin", id);
     Admin.update(input, { where: { id }, returning: true })
       .then((data) => {
         res.status(201).json({ data });

@@ -130,6 +130,50 @@ class APL01_Controller {
             {
               model: Skema,
               as: "skema",
+              include: [
+                {
+                  model: Unit_Kompetensi,
+                  as: "unitkompetensi",
+                  include: [
+                    {
+                      model: Kriteria_UnitKerja,
+                      as: "kriteria_unitkerja",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: Asesi,
+              as: "asesi",
+            },
+          ],
+        },
+      ],
+    })
+      .then((data) => {
+        console.log(data, "dataaplbyuser");
+        res.status(200).json({ data });
+      })
+      .catch((err) => console.log(err));
+  }
+  static showAPL01ByAllUser(req, res, next) {
+    let id = req.params.id;
+    console.log(id, "id-asesi");
+    APL01.findAll({
+      where: { id_asesi: id },
+      include: [
+        // { model: Asesi, as: "Asesis" },
+        { model: Admin, as: "admins" },
+        {
+          model: asesi_skema,
+
+          as: "asesi_skema",
+          // where: { id_asesi: id },
+          include: [
+            {
+              model: Skema,
+              as: "skema",
               include: [{ model: Unit_Kompetensi, as: "unitkompetensi" }],
             },
             {

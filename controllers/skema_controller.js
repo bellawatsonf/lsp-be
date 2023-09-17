@@ -1,3 +1,4 @@
+const { getPagination, getPagingData } = require("../helpers/pagination.js");
 const { Skema } = require("../models/index.js");
 const { Unit_Kompetensi, Kriteria_UnitKerja } = require("../models/index.js");
 class Skema_Controller {
@@ -16,7 +17,42 @@ class Skema_Controller {
       })
       .catch((err) => console.log(err));
   }
-
+  static showSkemaWithPaging(req, res, next) {
+    const { page, size, title } = req.query;
+    console.log(typeof page, "pg");
+    const { limit, offset } = getPagination(page, size);
+    Skema.findAll({
+      include: [
+        {
+          model: Unit_Kompetensi,
+          as: "unitkompetensi",
+          include: [{ model: Kriteria_UnitKerja, as: "kriteria_unitkerja" }],
+        },
+      ],
+    })
+      .then((data) => {
+        // res.status(200).json({ data });
+        Skema.findAndCountAll({
+          include: [
+            {
+              model: Unit_Kompetensi,
+              as: "unitkompetensi",
+              include: [
+                { model: Kriteria_UnitKerja, as: "kriteria_unitkerja" },
+              ],
+            },
+          ],
+        }).then((data) => {
+          const response = getPagingData(data, page, limit);
+          res.send(response);
+        });
+      })
+      .catch((err) =>
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving asesor",
+        })
+      );
+  }
   static createSkema(req, res, next) {
     let input = {
       no_skema: req.body.no_skema,

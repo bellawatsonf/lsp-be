@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "dataAsesi",
         foreignKey: "id_asesi",
       });
+      Asesi.hasMany(models.jadwal_asesiskema, {
+        as: "asesis",
+        foreignKey: "id_asesis",
+      });
     }
   }
   Asesi.init(

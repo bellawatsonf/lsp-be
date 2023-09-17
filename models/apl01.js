@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "asesi_skema",
         foreignKey: "id_asesi_skema",
       });
+      APL01.hasMany(models.Apl02, {
+        foreignKey: "id_apl01",
+        as: "APL01",
+      });
     }
   }
   APL01.init(

@@ -27,6 +27,8 @@ module.exports = {
           model: "Skemas",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onDelete: "CASCADE",
       },
       role: {
         type: Sequelize.STRING,

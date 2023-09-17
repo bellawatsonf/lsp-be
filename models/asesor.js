@@ -15,6 +15,14 @@ module.exports = (sequelize, DataTypes) => {
         as: "Asesor",
         foreignKey: "id_asesor",
       });
+      Asesor.hasMany(models.jadwal_asesiskema_asesor, {
+        foreignKey: "id_asesor",
+        as: "asesor",
+      });
+      Asesor.hasMany(models.InfoAsesor, {
+        foreignKey: "id_asesor",
+        as: "dataAsesor",
+      });
     }
   }
   Asesor.init(
