@@ -21,21 +21,25 @@ class Skema_Controller {
     const { page, size, title } = req.query;
     console.log(typeof page, "pg");
     const { limit, offset } = getPagination(page, size);
-    Skema.findAll({
-      include: [
-        {
-          model: Unit_Kompetensi,
-          as: "unitkompetensi",
-          include: [{ model: Kriteria_UnitKerja, as: "kriteria_unitkerja" }],
-        },
-      ],
-    })
+    Skema.findAll()
       .then((data) => {
-        res.status(200).json({ data });
-        // Skema.findAndCountAll().then((data) => {
-        //   const response = getPagingData(data, page, limit);
-        //   res.send(response);
-        // });
+        // res.status(200).json({ data });
+        Skema.findAndCountAll({
+          include: [
+            {
+              model: Unit_Kompetensi,
+              as: "unitkompetensi",
+              include: [
+                { model: Kriteria_UnitKerja, as: "kriteria_unitkerja" },
+              ],
+            },
+          ],
+          limit,
+          offset,
+        }).then((data) => {
+          const response = getPagingData(data, page, limit);
+          res.send(response);
+        });
       })
       .catch((err) =>
         res.status(500).send({
