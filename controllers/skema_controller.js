@@ -21,7 +21,15 @@ class Skema_Controller {
     const { page, size, title } = req.query;
     console.log(typeof page, "pg");
     const { limit, offset } = getPagination(page, size);
-    Skema.findAll()
+    Skema.findAll({
+      include: [
+        {
+          model: Unit_Kompetensi,
+          as: "unitkompetensi",
+          include: [{ model: Kriteria_UnitKerja, as: "kriteria_unitkerja" }],
+        },
+      ],
+    })
       .then((data) => {
         // res.status(200).json({ data });
         Skema.findAndCountAll({
