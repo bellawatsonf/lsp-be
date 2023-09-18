@@ -90,27 +90,53 @@ class Jadwal_AsesiSkema_Controller {
     Jadwal.findOne({ where: { id: idJadwal } })
       .then((tgl) => {
         console.log(tgl);
-        jadwal_asesiskema
-          .bulkCreate(req.body.data)
-          .then((data) => {
-            console.log(data, "databulk");
-            data.map((as) => {
-              console.log(as.id_asesis);
-              as.id_asesis.map((idAs) => {
-                Info.create({
-                  id_asesi: idAs,
-                  deskripsi_info: `Jadwal ${tgl.tipe} akan dilaksanakan pada ${
-                    new Date(tgl.tgl).toISOString().split("T")[0]
-                  } di ${tgl.tuk}`,
-                  info_status: `Info Penjadwalan ${tgl.tipe}`,
+        if (tgl.tipe === "pengayaan") {
+          jadwal_asesiskema
+            .bulkCreate(req.body.data)
+            .then((data) => {
+              console.log(data, "databulk");
+              data.map((as) => {
+                console.log(as.id_asesis);
+                as.id_asesis.map((idAs) => {
+                  Info.create({
+                    id_asesi: idAs,
+                    deskripsi_info: `Jadwal ${
+                      tgl.tipe
+                    } akan dilaksanakan pada ${
+                      new Date(tgl.tgl).toISOString().split("T")[0]
+                    } di ${tgl.tuk}`,
+                    info_status: `Info Penjadwalan ${tgl.tipe}`,
+                  });
                 });
               });
+              res.status(201).json({ data });
+            })
+            .catch((err) => {
+              console.log(err, "eror");
             });
-            res.status(201).json({ data });
-          })
-          .catch((err) => {
-            console.log(err, "eror");
-          });
+        } else {
+          jadwal_asesiskema
+            .bulkCreate(req.body.data)
+            .then((data) => {
+              console.log(data, "databulk");
+              // data.map((as) => {
+              //   console.log(as.id_asesis);
+              //   as.id_asesis.map((idAs) => {
+              //     Info.create({
+              //       id_asesi: idAs,
+              //       deskripsi_info: `Jadwal ${tgl.tipe} akan dilaksanakan pada ${
+              //         new Date(tgl.tgl).toISOString().split("T")[0]
+              //       } di ${tgl.tuk}`,
+              //       info_status: `Info Penjadwalan ${tgl.tipe}`,
+              //     });
+              //   });
+              // });
+              res.status(201).json({ data });
+            })
+            .catch((err) => {
+              console.log(err, "eror");
+            });
+        }
       })
       .catch((err) => {
         console.log(err, "eror");

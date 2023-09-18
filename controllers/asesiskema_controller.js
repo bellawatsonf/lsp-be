@@ -178,15 +178,16 @@ class asesi_skema_Controller {
             .catch((err) => {
               console.log(err);
             });
-        } else {
-          Asesi.update(input, { where: { id: data[1][0].id_asesi } })
-            .then(() => {
-              res.status(200).json({ msg: "berhasil memperbaiki dat" });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
         }
+        // else {
+        //   Asesi.update(input, { where: { id: data[1][0].id_asesi } })
+        //     .then(() => {
+        //       res.status(200).json({ msg: "berhasil memperbaiki data" });
+        //     })
+        //     .catch((err) => {
+        //       console.log(err);
+        //     });
+        // }
         // if (req.body.status_cek !== "revisi") {
         //   // Info.create({info_status:'Data Asesi',deskripsi_info:'pesan tolaknya sesuai sama inputan'})
         // } else if (req.body.status_cek === "terima") {

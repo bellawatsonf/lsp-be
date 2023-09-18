@@ -258,10 +258,23 @@ class Asesi_Controller {
           ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`,
           memiliki_nilai_D: req.body.memiliki_nilai_D,
           role: "asesi",
-          alasan_penolakan: req.body.alasan_penolakan,
+          // alasan_penolakan: null,
           tujuan_asesmen: req.body.tujuan_asesmen,
           nama_pemilik_rekening: req.body.nama_pemilik_rekening,
         };
+
+        if (
+          req.body.alasan_penolakan !== null &&
+          req.body.alasan_penolakan !== "belum-dicek"
+        ) {
+          input.alasan_penolakan = req.body.alasan_penolakan;
+        } else if (
+          req.body.alasan_penolakan === null ||
+          req.body.alasan_penolakan === "belum-dicek" ||
+          req.body.alasan_penolakan === undefined
+        ) {
+          input.alasan_penolakan = null;
+        }
 
         if (req.body.tgl_lahir !== undefined) {
           input.tgl_lahir = req.body.tgl_lahir;
@@ -391,29 +404,38 @@ class Asesi_Controller {
         // });
         // }
         console.log("lala", req.body.alasan_penolakan);
-        Asesi.update(input, { where: { id } })
-          .then((dataAsesi) => {
-            res.status(201).json({ data });
-
-            // if (
-            //   (req.body.alasan_penolakan ||
-            //     req.body.alasan_penolakan !== null) &&
-            //   req.body.status_pembayaran
-            // ) {
-            //   Info.create({
-            //     info_status: "Data Asesi",
-            //     id_asesi: data.id,
-            //     deskripsi_info: req.body.alasan_penolakan,
-            //   })
-
-            //     .catch((err) => {
-            //       console.log(err);
-            //     });
-            // }
-          })
-          .catch((err) => {
-            console.log(err, "eror");
-          });
+        if (
+          req.body.alasan_penolakan !== null &&
+          req.body.alasan_penolakan !== "belum-dicek" &&
+          req.body.alasan_penolakan !== undefined
+        ) {
+          Asesi.update(input, { where: { id } })
+            .then((dataAsesi) => {
+              Info.create({
+                info_status: "Perbaikan Data Asesi",
+                id_asesi: data.id,
+                deskripsi_info: req.body.alasan_penolakan,
+              })
+                .then((data) => {
+                  res.status(201).json({ data });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err, "eror");
+            });
+        } else {
+          console.log("masuk else asesiedit");
+          Asesi.update(input, { where: { id } })
+            .then((dataAsesi) => {
+              res.status(201).json({ data });
+            })
+            .catch((err) => {
+              console.log(err, "eror");
+            });
+        }
       })
 
       .catch((err) => {

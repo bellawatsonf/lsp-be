@@ -35,7 +35,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        nama_skema: "Analisis Kebijakan Public",
+        nama_skema: "Analis Kebijakan Publik",
         no_skema: "false",
         kuota: "10",
         createdAt: new Date(),
@@ -51,7 +51,7 @@ module.exports = {
       },
 
       {
-        nama_skema: "Manager Logistik Proyek",
+        nama_skema: "Manajer Logistik Proyek",
         no_skema: "false",
         kuota: "10",
         createdAt: new Date(),

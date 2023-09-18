@@ -8,7 +8,7 @@ const {
   Unit_Kompetensi,
   Info,
 } = require("../models/index.js");
-
+const { Op } = require("sequelize");
 class APL01_Controller {
   static showAPL01(req, res, next) {
     APL01.findAll({
@@ -49,27 +49,36 @@ class APL01_Controller {
     APL01.create(input)
       .then((data) => {
         // res.status(201).json({ data });
-        Info.create({
-          info_status: "Data Asesi",
-          id_asesi: req.body.id_asesi,
-          deskripsi_info: "Permohonan Sertifikasi Anda Terverifikasi",
-        })
+        Info.update(
+          {
+            info_status: "Data Asesi",
+            id_asesi: req.body.id_asesi,
+            deskripsi_info: "Permohonan Sertifikasi Anda Terverifikasi",
+          },
+          {
+            where: {
+              info_status: "Perbaikan Data Asesi",
+              id_asesi: req.body.id_asesi,
+            },
+          }
+        )
           .then((info) => {
             res.status(200).json({ info });
             Asesi.findOne({ where: { id: req.body.id_asesi } })
               .then(() => {
                 Asesi.update(
-                  { status_pembayaran: "paid" },
+                  { status_pembayaran: "paid", alasan_penolakan: null },
                   { where: { id: req.body.id_asesi } }
                 )
                   .then((result) => {
-                    // res.status(200).json({ msg: "Berhasil memperbaiki data" });
-                    Info.crate({
-                      deskripsi_info:
-                        "Pembayaran sertifikasi anda terverifikasi",
-                      status: "Data Asesi",
-                      id_asesi: req.body.id_asesi,
-                    });
+                    res.status(200).json({ msg: "Berhasil memperbaiki data" });
+
+                    // Info.crate({
+                    //   deskripsi_info:
+                    //     "Pembayaran sertifikasi anda terverifikasi",
+                    //   status: "Data Asesi",
+                    //   id_asesi: req.body.id_asesi,
+                    // });
                   })
                   .catch((error) => {
                     console.log(error);

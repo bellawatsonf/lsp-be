@@ -31,21 +31,11 @@ class Skema_Controller {
       ],
     })
       .then((data) => {
-        // res.status(200).json({ data });
-        Skema.findAndCountAll({
-          include: [
-            {
-              model: Unit_Kompetensi,
-              as: "unitkompetensi",
-              include: [
-                { model: Kriteria_UnitKerja, as: "kriteria_unitkerja" },
-              ],
-            },
-          ],
-        }).then((data) => {
-          const response = getPagingData(data, page, limit);
-          res.send(response);
-        });
+        res.status(200).json({ data });
+        // Skema.findAndCountAll().then((data) => {
+        //   const response = getPagingData(data, page, limit);
+        //   res.send(response);
+        // });
       })
       .catch((err) =>
         res.status(500).send({

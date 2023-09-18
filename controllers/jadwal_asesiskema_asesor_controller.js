@@ -115,20 +115,44 @@ class Jadwal_AsesiSkema_Asesor_Controller {
       .then((tgl) => {
         console.log(tgl);
         jadwal_asesiskema_asesor.bulkCreate(req.body.data).then((data) => {
-          console.log(data);
+          console.log(data, "datajadwalasesiasesor");
           data.map((asesor) => {
-            InfoAsesor.create({
-              id_asesor: asesor.id_asesor,
-              info_status: `Info Penjadwalan Sertifikasi ${tgl.tipe}`,
-              deskripsi_info: `Jadwal ${tgl.tipe} akan dilaksanakan pada ${
-                new Date(tgl.tgl).toISOString().split("T")[0]
-              } di ${tgl.tuk}`,
-            })
-              .then((data) => {
-                res.status(201).json({ data });
-              })
-              .catch((err) => {
-                console.log(err);
+            jadwal_asesiskema
+              .findAll({ where: { id: asesor.id_jadwal_asesiskema } })
+              .then((j) => {
+                console.log(j, "jads");
+                j.map((jd) => {
+                  jd.id_asesis.map((ids) => {
+                    asesor
+                      .findOne({ where: { id_skema: jd.id_skema } })
+                      .then((dataAs) => {
+                        InfoAsesor.create({
+                          id_asesor: asesor.id_asesor,
+                          info_status: `Info Penjadwalan Sertifikasi ${tgl.tipe}`,
+                          deskripsi_info: `Jadwal ${
+                            tgl.tipe
+                          } akan dilaksanakan pada ${
+                            new Date(tgl.tgl).toISOString().split("T")[0]
+                          } di ${tgl.tuk}`,
+                        })
+                          .then((data) => {
+                            // res.status(201).json({ data });
+                            Info.create({
+                              id_asesi: ids,
+                              info_status: `Info Penjadwalan Sertifikasi ${tgl.tipe}`,
+                              deskripsi_info: `Jadwal ${
+                                tgl.tipe
+                              } akan dilaksanakan pada ${
+                                new Date(tgl.tgl).toISOString().split("T")[0]
+                              } dengan asesesor ${dataAs.nama} di ${tgl.tuk}`,
+                            });
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      });
+                  });
+                });
               });
           });
           // data.map((el) => {
