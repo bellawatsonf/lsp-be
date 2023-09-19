@@ -39,7 +39,7 @@ class Jadwal_Controller {
     console.log(req.body.tgl, req.body.tipe);
     let judul = req.body.tipe + "_" + req.body.tgl;
     let input = {
-      nama_jadwal: judul,
+      nama_jadwal: req.body.nama_jadwal,
       tgl: req.body.tgl,
       tuk: req.body.tuk,
       tipe: req.body.tipe,
@@ -59,7 +59,7 @@ class Jadwal_Controller {
     console.log(req.body.tgl, req.body.tipe);
     let judul = req.body.tipe + "_" + req.body.tgl;
     let input = {
-      nama_jadwal: judul,
+      nama_jadwal: req.body.nama_jadwal,
       tgl: req.body.tgl,
       tuk: req.body.tuk,
       tipe: req.body.tipe,
