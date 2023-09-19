@@ -7,6 +7,7 @@ const TYPE_IMAGE = {
   "image/jpg": "jpg",
   "image/jpeg": "jpeg",
   "image/png": "png",
+  "application/pdf": "pdf",
 };
 
 // const gstorage = multer({

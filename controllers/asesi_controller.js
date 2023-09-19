@@ -282,6 +282,7 @@ class Asesi_Controller {
 
         // console.log(input, "inputan");
         if (req.files !== undefined) {
+          console.log("masuk kondisi bukan undefined");
           if (req.files.transkrip !== undefined) {
             const ts = bucket.file(req.files.transkrip[0]).name;
 
