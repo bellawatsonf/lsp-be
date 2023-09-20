@@ -210,7 +210,7 @@ class Asesi_Controller {
     let dataAsesi = {};
     const uuid = crypto.randomUUID();
 
-    if (req.body.ttd_asesi !== undefined) {
+    if (req.body.ttd_asesi !== undefined && req.body.asesi !== null) {
       imageAsesi = req.body.ttd_asesi;
       var base64Data = imageAsesi?.replace("data:image/png;base64,", "");
       pathname = `public/uploads/${req.body.nama_lengkap}_ttd_asesi.png`;
@@ -226,7 +226,7 @@ class Asesi_Controller {
         console.log(req.body, "requezbodyyyy");
         dataAsesi = data;
         let ttd_file = "";
-        if (pathname) {
+        if (pathname !== null) {
           ttd_file = pathname.split(".").pop();
           bucket.upload(pathname, {
             destination: `${data.nama_lengkap}_ttd_asesi.png`,
@@ -425,7 +425,7 @@ class Asesi_Controller {
                 });
             })
             .catch((err) => {
-              console.log(err, "eror");
+              console.log(err, "erorx");
             });
         } else {
           console.log("masuk else asesiedit");
@@ -434,13 +434,14 @@ class Asesi_Controller {
               res.status(201).json({ data });
             })
             .catch((err) => {
-              console.log(err, "eror");
+              console.log(err, "erorsss");
+              res.status(500).json({ err });
             });
         }
       })
 
       .catch((err) => {
-        console.log(err);
+        res.status(500).json({ err });
       });
   }
 

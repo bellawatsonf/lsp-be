@@ -1,7 +1,10 @@
+const { getPagination, getPagingData } = require("../helpers/pagination.js");
 const { asesi_skema, Skema, Asesi, Info } = require("../models/index.js");
 var Sequelize = require("sequelize");
 class asesi_skema_Controller {
   static show_Asesi_Skema(req, res, next) {
+    let { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
     asesi_skema
       .findAll({
         include: [
@@ -11,9 +14,25 @@ class asesi_skema_Controller {
           },
           { model: Skema, as: "skema" },
         ],
+        order: [["updatedAt", "DESC"]],
       })
       .then((data) => {
-        res.status(200).json({ data });
+        asesi_skema
+          .findAndCountAll({
+            include: [
+              {
+                model: Asesi,
+                as: "asesi",
+              },
+              { model: Skema, as: "skema" },
+            ],
+            order: [["updatedAt", "DESC"]],
+          })
+          .then((data) => {
+            const response = getPagingData(data, page, limit);
+            res.send(response);
+            // res.status(200).json({ data });
+          });
       })
       .catch((err) => console.log(err));
   }

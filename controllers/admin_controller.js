@@ -23,7 +23,11 @@ class Admin_Controller {
     const { limit, offset } = getPagination(page, size);
     Admin.findAll()
       .then((data) => {
-        res.status(200).json({ data });
+        console.log(data);
+        Admin.findAndCountAll().then((data) => {
+          const response = getPagingData(data, page, limit);
+          res.send(response);
+        });
       })
       .catch((err) => console.log(err));
   }
