@@ -14,6 +14,8 @@ class asesi_skema_Controller {
           },
           { model: Skema, as: "skema" },
         ],
+        limit,
+        offset,
         order: [["updatedAt", "DESC"]],
       })
       .then((data) => {
