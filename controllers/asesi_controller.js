@@ -223,7 +223,7 @@ class Asesi_Controller {
     Asesi.findOne({ where: { id } })
       .then((data) => {
         // console.log(data);
-        console.log(req.body, "requezbodyyyy");
+        // console.log(req.body.ttd_asesi, req.files.ttd_asesi, "requezbodyyyy");
         dataAsesi = data;
         let ttd_file = "";
         if (pathname !== null) {
@@ -255,7 +255,7 @@ class Asesi_Controller {
           kodepos_kantor: req.body.kodepos_kantor,
           provinsi: req.body.provinsi,
           kota: req.body.kota,
-          ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`,
+          // ttd_asesi: `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`,
           memiliki_nilai_D: req.body.memiliki_nilai_D,
           role: "asesi",
           // alasan_penolakan: null,
@@ -282,7 +282,7 @@ class Asesi_Controller {
 
         // console.log(input, "inputan");
         if (req.files !== undefined) {
-          console.log("masuk kondisi bukan undefined");
+          console.log("masuk kondisi bukan undefined", req.files);
           if (req.files.transkrip !== undefined) {
             const ts = bucket.file(req.files.transkrip[0]).name;
 
@@ -383,8 +383,22 @@ class Asesi_Controller {
             console.log(surat_pernyataan, "surat_pernyataan");
             input.surat_pernyataan = surat_pernyataan;
           }
+          if (req.body.ttd_asesi !== undefined) {
+            // const surat = bucket.file(req.files.surat_pernyataan[0]).name;
+
+            // dataStorage.push(surat);
+
+            // let surat_pernyataan = `${
+            //   bucket.file(req.files.surat_pernyataan[0]).storage.apiEndpoint
+            // }/${bucket.name}/${data.nama_lengkap}_${surat.fieldname}_${
+            //   surat.filename
+            // }`;
+            // console.log(surat_pernyataan, "surat_pernyataan");
+            input.ttd_asesi = `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`;
+          }
+
           for (let i = 0; i < dataStorage.length; i++) {
-            console.log("masuk", dataStorage[i].path);
+            console.log("masuk", dataStorage[i]);
             bucket.upload(dataStorage[i].path, {
               destination: `${data.nama_lengkap}_${dataStorage[i].fieldname}_${dataStorage[i].filename}`,
             });
