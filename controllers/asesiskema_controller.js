@@ -26,12 +26,20 @@ class asesi_skema_Controller {
               },
               { model: Skema, as: "skema" },
             ],
+            limit,
+            offset,
             order: [["updatedAt", "DESC"]],
           })
           .then((data) => {
             const response = getPagingData(data, page, limit);
             res.send(response);
             // res.status(200).json({ data });
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while retrieving asesor",
+            });
           });
       })
       .catch((err) => console.log(err));
