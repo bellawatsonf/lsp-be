@@ -3,10 +3,12 @@ const { asesi_skema, Skema, Asesi, Info } = require("../models/index.js");
 var Sequelize = require("sequelize");
 class asesi_skema_Controller {
   static show_Asesi_Skema(req, res, next) {
-    let { page, size } = req.query;
+    let { page, size, statusCek } = req.query;
     const { limit, offset } = getPagination(page, size);
     asesi_skema
       .findAll({
+        where: { status_cek: statusCek },
+
         include: [
           {
             model: Asesi,
@@ -21,6 +23,8 @@ class asesi_skema_Controller {
       .then((data) => {
         asesi_skema
           .findAndCountAll({
+            where: { status_cek: statusCek },
+
             include: [
               {
                 model: Asesi,

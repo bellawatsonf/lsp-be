@@ -14,6 +14,8 @@ class Asesor_Controller {
           as: "Skema",
         },
       ],
+      limit,
+      offset,
     })
       .then((data) => {
         // res.status(200).json({ data });
