@@ -1,3 +1,4 @@
+const { getPagination, getPagingData } = require("../helpers/pagination.js");
 const {
   APL01,
   Asesi,
@@ -11,6 +12,9 @@ const {
 const { Op } = require("sequelize");
 class APL01_Controller {
   static showAPL01(req, res, next) {
+    const { page, size, title } = req.query;
+    console.log(typeof page, "pg");
+    const { limit, offset } = getPagination(page, size);
     APL01.findAll({
       include: [
         // { model: Asesi, as: "Asesis" },
@@ -30,9 +34,43 @@ class APL01_Controller {
           ],
         },
       ],
+      limit,
+      offset,
     })
       .then((data) => {
-        res.status(200).json({ data });
+        // res.status(200).json({ data });
+        APL01.findAndCountAll({
+          include: [
+            // { model: Asesi, as: "Asesis" },
+            { model: Admin, as: "admins" },
+            {
+              model: asesi_skema,
+              as: "asesi_skema",
+              include: [
+                {
+                  model: Skema,
+                  as: "skema",
+                },
+                {
+                  model: Asesi,
+                  as: "asesi",
+                },
+              ],
+            },
+          ],
+          limit,
+          offset,
+        })
+          .then((data) => {
+            const response = getPagingData(data, page, limit);
+            res.send(response);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while retrieving asesor",
+            });
+          });
       })
       .catch((err) => console.log(err));
   }
