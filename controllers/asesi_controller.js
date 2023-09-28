@@ -195,7 +195,7 @@ class Asesi_Controller {
     // console.log("masuk");
     let id = req.params.id;
     console.log(id, "requezid");
-    console.log(req.body, "requezbody");
+    console.log(req.body.nama_pemilik_rekening, "namapemilik");
 
     let imageAsesi = null;
     let pathname = null;
