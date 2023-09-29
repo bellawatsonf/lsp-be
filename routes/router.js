@@ -114,6 +114,7 @@ router.post("/add-role", Role_Controller.createRole);
 
 //controller APL01
 router.get("/apl01", APL01_Controller.showAPL01);
+router.get("/apl01-withoutpage", APL01_Controller.showAPL01WithoutPage);
 router.post("/add-apl01", APL01_Controller.createAPL01);
 router.get("/apl01byid/:id", APL01_Controller.showAPL01ById);
 router.get("/apl01byuser/:id", APL01_Controller.showAPL01ByUser);

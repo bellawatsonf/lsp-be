@@ -74,6 +74,32 @@ class APL01_Controller {
       })
       .catch((err) => console.log(err));
   }
+  static showAPL01WithoutPage(req, res, next) {
+    APL01.findAll({
+      include: [
+        // { model: Asesi, as: "Asesis" },
+        { model: Admin, as: "admins" },
+        {
+          model: asesi_skema,
+          as: "asesi_skema",
+          include: [
+            {
+              model: Skema,
+              as: "skema",
+            },
+            {
+              model: Asesi,
+              as: "asesi",
+            },
+          ],
+        },
+      ],
+    })
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((err) => console.log(err));
+  }
   static createAPL01(req, res, next) {
     console.log("masuk apl01", req.body.id_asesi);
     let input = {
