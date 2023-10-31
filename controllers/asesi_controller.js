@@ -191,11 +191,10 @@ class Asesi_Controller {
     readStream.pipe(res);
   }
   static editAsesi(req, res, next) {
+    console.log(req.body.ttd_asesi, "reqbody");
     // console.log(req.files, "edit");
     // console.log("masuk");
     let id = req.params.id;
-    console.log(id, "requezid");
-    console.log(req.body.nama_pemilik_rekening, "namapemilik");
 
     let imageAsesi = null;
     let pathname = null;
@@ -210,7 +209,21 @@ class Asesi_Controller {
     let dataAsesi = {};
     const uuid = crypto.randomUUID();
 
-    if (req.body.ttd_asesi !== undefined && req.body.asesi !== null) {
+    // if (
+    //   req.body.ttd_asesi !== undefined &&
+    //   req.body.asesi !== null &&
+    //   req.body.ttd_asesi !== null
+    // ) {
+    //   imageAsesi = req.body.ttd_asesi;
+    //   var base64Data = imageAsesi?.replace("data:image/png;base64,", "");
+    //   pathname = `public/uploads/${req.body.nama_lengkap}_ttd_asesi.png`;
+    //   fs.writeFile(pathname, base64Data, "base64", function (err) {
+    //     console.log(err);
+    //   });
+    // }
+
+    if (req.body.ttd_asesi !== undefined && req.body.ttd_asesi !== null) {
+      console.log("masuk sini");
       imageAsesi = req.body.ttd_asesi;
       var base64Data = imageAsesi?.replace("data:image/png;base64,", "");
       pathname = `public/uploads/${req.body.nama_lengkap}_ttd_asesi.png`;
@@ -218,8 +231,6 @@ class Asesi_Controller {
         console.log(err);
       });
     }
-    console.log(pathname, "pathname");
-    console.log(req.body, "reqbody");
     Asesi.findOne({ where: { id } })
       .then((data) => {
         // console.log(data);
@@ -383,19 +394,6 @@ class Asesi_Controller {
             console.log(surat_pernyataan, "surat_pernyataan");
             input.surat_pernyataan = surat_pernyataan;
           }
-          if (req.body.ttd_asesi !== undefined) {
-            // const surat = bucket.file(req.files.surat_pernyataan[0]).name;
-
-            // dataStorage.push(surat);
-
-            // let surat_pernyataan = `${
-            //   bucket.file(req.files.surat_pernyataan[0]).storage.apiEndpoint
-            // }/${bucket.name}/${data.nama_lengkap}_${surat.fieldname}_${
-            //   surat.filename
-            // }`;
-            // console.log(surat_pernyataan, "surat_pernyataan");
-            input.ttd_asesi = `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`;
-          }
 
           for (let i = 0; i < dataStorage.length; i++) {
             console.log("masuk", dataStorage[i]);
@@ -404,6 +402,12 @@ class Asesi_Controller {
             });
             Fs.remove(`${dataStorage[i].path}`); //untuk remove di foldernya
           }
+        }
+
+        if (req.body.ttd_asesi !== undefined && req.body.ttd_asesi !== null) {
+          console.log("masuk if ttd_asesi", req.body.ttd_asesi);
+
+          input.ttd_asesi = `https://storage.googleapis.com/${bucket.name}/${data.nama_lengkap}_ttd_asesi.png`;
         }
         // fs.readFile(pathname, function read(err, data) {
         //   if (err) {
