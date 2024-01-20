@@ -243,9 +243,9 @@ class asesi_skema_Controller {
     asesi_skema
       .findOne({ where: { id } })
       .then((data) => {
-        // console.log(data);
+        console.log(data, "asesiskema");
         Skema.findOne({ where: { id: data.id_skema } }).then((dataskema) => {
-          console.log(dataskema, "dataskema");
+          // console.log(dataskema, "dataskema");
           asesi_skema
             .destroy({ where: { id }, returning: true })
             .then(() => {
@@ -258,9 +258,18 @@ class asesi_skema_Controller {
                   // res.status(200).json({ msg: "Data berhasil dihapus" });
                   Info.destroy({ where: { id_asesi: data.id_asesi } })
                     .then((info) => {
-                      res
-                        .status(201)
-                        .json({ msg: "Berhasil memperbaharui data" });
+                      Asesi.destroy({ where: { id: data.id_asesi } })
+                        .then((deleteasesi) => {
+                          res
+                            .status(201)
+                            .json({ msg: "Berhasil memperbaharui data" });
+                        })
+                        .catch((err) => {
+                          console.log(err);npm
+                        });
+                      // res
+                      //   .status(201)
+                      //   .json({ msg: "Berhasil memperbaharui data" });
                     })
                     .catch((err) => {
                       console.log(err);
